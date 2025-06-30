@@ -6,3 +6,9 @@ This is a repository with all bootfy skripts or "mods" so that you can install t
 
 ## How can I upload my skript?
 Create an issue with the file attached. Include a description and a title. It will be added when I can.
+
+## Spec
+
+1. Fetch `skripts/*`
+2. Make list by name
+3. Read the first line of the file (`skript.sk`) to get the description
