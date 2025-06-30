@@ -1,0 +1,58 @@
+# Access to Dungeonfy 2 in Dungeonfy 1
+command /dfy2:
+  aliases: /2, /d2, /dungeonfy2, /dungeonfytwo, /fy2
+  trigger:
+    # Teleport
+    teleport the player to location(1177.5, 28, -120.5, world "ul_void", 180, 0)
+
+    # Title
+    send title "&6Dungeonfy &a&l2" with subtitle "&dhave fun :D" to player
+
+command /dfy2warp:
+	aliases: /d2warp, /d2wp 
+	trigger:
+		set {_gui} to a new chest inventory with 4 row with name "&6Warp Select &a&l2"
+		set slot 10 of {_gui} to grass block named "&6Spawn" with lore "&7Camping! :D"
+		set slot 12 of {_gui} to oak planks named "&aFai Village" with lore "&7The small village of Fai."
+		set slot 14 of {_gui} to sand named "&eDesert" with lore "&7Yeah it's just Egypt"
+		set slot 16 of {_gui} to polished basalt named "&4Dungeons" with lore "&7Be Careful..."
+		set slot 31 of {_gui} to barrier named "&fClose Menu"
+		open {_gui} to player
+		delete {_gui}
+
+on inventory click:
+  if name of event-inventory is "&6Warp Select &a&l2":
+    cancel event
+    if index of event-slot = 10:
+      close player's inventory
+      make player execute command "/d2spawn"
+    if index of event-slot = 12:
+      close player's inventory
+      make player execute command "/fai"
+    if index of event-slot = 14:
+      close player's inventory
+      make player execute command "/desert2"
+    if index of event-slot = 16:
+      make player execute command "/dungeons2"
+    if index of event-slot = 31:
+      close player's inventory
+
+
+command /dfy2spawn:
+  aliases: /d2spawn, /d2spwn, /d2sp 
+  trigger:
+    teleport the player to location(1177.5, 28, -120.5, world "ul_void", 180, 0)
+
+command /faivillage:
+  aliases: /fai, /village 
+  trigger:
+    teleport the player to location(1177.5, 35, -335.5, world "ul_void", 180, 0)
+
+command /desert2:
+  trigger:
+    teleport the player to location(1025.5, 34, -282.5, world "ul_void", 180, 0)
+
+command /dungeons2:
+  aliases: /dung2
+  trigger:
+    teleport the player to location(1199.5, 35, -277.5, world "ul_void", -90, 0)
