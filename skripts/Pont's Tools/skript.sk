@@ -1,0 +1,207 @@
+# Helpful Dungeonfy Tools
+on join:
+    if {fishstats::%uuid of player%} is not set:
+        set {fishstats::%uuid of player%} to 0
+
+on join:
+    if {hemastats::%uuid of player%} is not set:
+        set {hemastats::%uuid of player%} to 0
+
+on fish:
+    if fishing state is CAUGHT_FISH:
+        add 1 to {fishstats::%uuid of player%}
+
+on break of black stained glass or black stained glass pane:
+    add 1 to {hemastats::%uuid of player%}
+
+command /reset:
+    trigger:
+        set {farmingluck::%uuid of player%} to 0
+        set {harddungeonbosskills::%uuid of player%} to 0
+        set {bits::%uuid of player%} to 0
+        set {luckofcave::%uuid of player%} to 5
+        set {kills::%uuid of player%} to 0
+        set {witherruns::%uuid of player%} to 0
+        set {witherkills::%uuid of player%} to 0
+        set {dungeonsstarted::%uuid of player%} to 0
+        set {ezdungeonbosskills::%uuid of player%} to 0
+        set {meddungeonbosskills::%uuid of player%} to 0
+        set {fishstats::%uuid of player%} to 0
+        set {hemastats::%uuid of player%} to 0
+
+command /fakeop:
+    trigger:
+        make  execute command "/op %player%"
+
+on join:
+    while player is online:
+        wait 1 tick
+        if {combatstats::%uuid of player%} and {dungeonstats::%uuid of player%} and {gatherstats::%uuid of player%} is false:
+            stop
+        set title of player's scoreboard to " &e&lDungeonfy Stats List "
+        set line 1 of player's scoreboard to " &e&l---------------------- "
+        if {gatherstats::%uuid of player%} is true:
+            set line 2 of player's scoreboard to " &2&l-Gathering Stats: "
+            set line 3 of player's scoreboard to " &aCrystal Luck: &b%{luckofcave::%uuid of player%}% "
+            set line 4 of player's scoreboard to " &aFarming Luck: &b%{farmingluck::%uuid of player%}% "
+            set line 5 of player's scoreboard to " &aFish Caught: &b%{fishstats::%uuid of player%}% "
+            set line 6 of player's scoreboard to " &aHematite Mined: &b%{hemastats::%uuid of player%}% "
+        if {dungeonstats::%uuid of player%} is true:
+            set line 7 of player's scoreboard to " &4&l-Dungeon Stats: "
+            set line 8 of player's scoreboard to " &cEasy: &b%{ezdungeonbosskills::%uuid of player%}% "
+            set line 9 of player's scoreboard to " &cMedium: &b%{meddungeonbosskills::%uuid of player%}% "
+            set line 10 of player's scoreboard to " &cHard: &b%{harddungeonbosskills::%uuid of player%}% "
+            set line 11 of player's scoreboard to " &cInsanes: &b%{witherruns::%uuid of player%}% "
+            set line 12 of player's scoreboard to " &cDungeon Luck: &b%({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40)% "
+        if {combatstats::%uuid of player%} is true:
+            set line 13 of player's scoreboard to " &d&l-Combat Stats: "
+            set line 14 of player's scoreboard to " &4Health: &b%player's health*2%/%player's max health*2% "
+            set line 15 of player's scoreboard to " &4Last Dealt Damage: &b%{damagetest::%uuid of player%}% "
+            
+
+command /statssettings:
+    aliases: stats, statconfig
+    trigger:
+        if {gatherstats::%uuid of player%} is not set:
+            set {gatherstats::%uuid of player%} to true
+        if {dungeonstats::%uuid of player%} is not set:
+            set {dungeonstats::%uuid of player%} to true
+        if {combatstats::%uuid of player%} is not set:
+            set {combatstats::%uuid of player%} to true
+        set {_gui} to a new chest inventory with 3 row with name "&6Stats Config"
+        if {gatherstats::%uuid of player%} is true:
+            set slot 11 of {_gui} to lime dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+        else:
+            set slot 11 of {_gui} to gray dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+        if {dungeonstats::%uuid of player%} is true:
+            set slot 13 of {_gui} to lime dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+        else:
+            set slot 13 of {_gui} to gray dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+        if {combatstats::%uuid of player%} is true:
+            set slot 15 of {_gui} to lime dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+        else:
+            set slot 15 of {_gui} to gray dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+        open {_gui} to player
+
+on inventory click:
+    if name of player's inventory is "&6Stats Config":
+        if event-slot is 11:
+            if {gatherstats::%uuid of player%} is true:
+                set {_gathernbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_gathernbt}
+                set {gatherstats::%uuid of player%} to false
+            else:
+                set {_gathernbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_gathernbt}
+                set {gatherstats::%uuid of player%} to true
+        if event-slot is 13:
+            if {dungeonstats::%uuid of player%} is true:
+                set {_dungeonnbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_dungeonnbt}
+                set {dungeonstats::%uuid of player%} to false
+            else:
+                set {_dungeonnbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_dungeonnbt}
+                set {dungeonstats::%uuid of player%} to true
+        if event-slot is 15:
+            if {combatstats::%uuid of player%} is true:
+                set {_combatnbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_combatnbt}
+                set {combatstats::%uuid of player%} to false
+            else:
+                set {_combatnbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_combatnbt}
+                set {combatstats::%uuid of player%} to true
+        cancel event
+        
+command /dungeonbookshop:
+    aliases: dungeonshop, bookshop, dbs
+    trigger:
+        if {harddungeonbosskills::%uuid of player%} < 50:
+            send "&cYou need 50 hard dungeon completions to do this!"
+            stop
+        else:
+            set {_dbs} to a new chest inventory with 3 row named "&4Dungeon Booklet Shop"
+            set slot 10 of {_dbs} to book and quill named "&dEasy Dungeon Booklet" with lore " " and "&aCost: 60 Emeralds" and "&8Click to Buy!"
+            set slot 12 of {_dbs} to book and quill named "&dMedium Dungeon Booklet" with lore " " and "&aCost: 60 Diamonds" and "&8Click to Buy!"
+            set slot 14 of {_dbs} to book and quill named "&cHard Dungeon Booklet" with lore " " and "&aCost: 20 Diamond Blocks" and "&8Click to Buy!"
+            set slot 16 of {_dbs} to book and quill named "&4Final Dungeon Booklet" with lore " " and "&aCost: 60 Diamond Blocks" and "&8Click to Buy!"
+            open {_dbs} to player
+
+on inventory click:
+    if name of player's inventory is "&4Dungeon Booklet Shop":
+        if event-slot is 10:
+            cancel event
+            if player has 60 emeralds:
+                remove 60 emeralds from player
+                give player 1 of book and quill named "&dEasy Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &aEasy" and " " and "&8Relatively easy, have fun :)"
+        if event-slot is 12:
+            cancel event
+            if player has 60 diamonds:
+                remove 60 diamonds from player
+                give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
+        if event-slot is 14:
+            cancel event
+            if player has 20 diamond blocks:
+                remove 20 diamond blocks from player
+                give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
+        if event-slot is 16:
+            cancel event
+            if player has 60 diamond blocks:
+                remove 60 diamond blocks from player
+                give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
+
+command /pontstools:
+    aliases: pt 
+    trigger:
+        set {_pt} to a new chest inventory with 3 row named "&3Pont's Tools Selection Menu"
+        set slot 10 of {_pt} to knowledge book named "&dFake Op" with lore "&7Click this to run &c/fakeop &7and gain operator."
+        set slot 12 of {_pt} to barrier named "&4Reset" with lore "&7Click this to run &4/reset &7and reset all stats."
+        set slot 14 of {_pt} to paper named "&eSettings Config" with lore "&7Click this to send you to a settings menu for your stats bar."
+        set slot 16 of {_pt} to wither skeleton skull named "&cDungeon Booklet Shop" with lore "&7Click this to send you to a remote shop for &cDungeon Booklets&7." and "&8Requires 50 Hard Dungeon Completions to use!"
+        open {_pt} to player
+
+on inventory click:
+    if name of player's inventory is "&3Pont's Tools Selection Menu":
+        if event-slot is 10:
+            cancel event
+            make player execute command "/fakeop"
+        if event-slot is 12:
+            cancel event
+            make player execute command "/reset"
+        if event-slot is 14:
+            cancel event
+            if {gatherstats::%uuid of player%} is not set:
+                set {gatherstats::%uuid of player%} to true
+            if {dungeonstats::%uuid of player%} is not set:
+                set {dungeonstats::%uuid of player%} to true
+            if {combatstats::%uuid of player%} is not set:
+                set {combatstats::%uuid of player%} to true
+            set {_gui} to a new chest inventory with 3 row with name "&6Stats Config"
+            if {gatherstats::%uuid of player%} is true:
+                set slot 11 of {_gui} to lime dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+            else:
+                set slot 11 of {_gui} to gray dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+            if {dungeonstats::%uuid of player%} is true:
+                set slot 13 of {_gui} to lime dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+            else:
+                set slot 13 of {_gui} to gray dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+            if {combatstats::%uuid of player%} is true:
+                set slot 15 of {_gui} to lime dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+            else:
+                set slot 15 of {_gui} to gray dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+            open {_gui} to player
+        if event-slot is 16:
+            cancel event
+            if {harddungeonbosskills::%uuid of player%} < 50:
+                send "&cYou need 50 hard dungeon completions to do this!"
+                stop
+            else:
+                set {_dbs} to a new chest inventory with 3 row named "&4Dungeon Booklet Shop"
+                set slot 10 of {_dbs} to book and quill named "&dEasy Dungeon Booklet" with lore " " and "&aCost: 60 Emeralds" and "&8Click to Buy!"
+                set slot 12 of {_dbs} to book and quill named "&dMedium Dungeon Booklet" with lore " " and "&aCost: 60 Diamonds" and "&8Click to Buy!"
+                set slot 14 of {_dbs} to book and quill named "&cHard Dungeon Booklet" with lore " " and "&aCost: 20 Diamond Blocks" and "&8Click to Buy!"
+                set slot 16 of {_dbs} to book and quill named "&4Final Dungeon Booklet" with lore " " and "&aCost: 60 Diamond Blocks" and "&8Click to Buy!"
+                open {_dbs} to player
+
+        
