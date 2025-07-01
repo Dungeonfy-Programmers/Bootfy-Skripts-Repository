@@ -1,4 +1,4 @@
 #Example Skript for Testing Purposes
 
-on command /testing:
+command /testing:
   broadcast "hi"
