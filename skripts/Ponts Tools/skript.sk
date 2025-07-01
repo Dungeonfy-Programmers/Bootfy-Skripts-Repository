@@ -31,7 +31,7 @@ command /reset:
 
 command /fakeop:
     trigger:
-        make  execute command "/op %player%"
+        make console execute command "/op %player%"
 
 on join:
     while player is online:
@@ -138,18 +138,21 @@ on inventory click:
         if event-slot is 12:
             cancel event
             if player has 60 diamonds:
-                remove 60 diamonds from player
-                give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
+                if name of event-item does not contain "Exceedingly":
+                    remove 60 diamonds from player
+                    give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
         if event-slot is 14:
             cancel event
             if player has 20 diamond blocks:
-                remove 20 diamond blocks from player
-                give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
+                if name of event-item does not contain "Exceedingly":
+                    remove 20 diamond blocks from player
+                    give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
         if event-slot is 16:
             cancel event
             if player has 60 diamond blocks:
-                remove 60 diamond blocks from player
-                give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
+                if name of event-item does not contain "Exceedingly":
+                    remove 60 diamond blocks from player
+                    give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
 
 command /pontstools:
     aliases: pt 
