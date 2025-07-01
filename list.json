@@ -1,0 +1,10 @@
+{
+  "Example": {
+    "description": "Example Skript for Testing Purposes",
+    "url": "https://raw.githubusercontent.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/refs/heads/main/skripts/Example/skript.sk"
+  },
+  "Dungeonfy 2": {
+    "description": "Access to Dungeonfy 2 in Dungeonfy 1",
+    "url": "https://raw.githubusercontent.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/refs/heads/main/skripts/Dungeonfy%202/skript.sk"
+  }
+}
