@@ -137,22 +137,19 @@ on inventory click:
                 give player 1 of book and quill named "&dEasy Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &aEasy" and " " and "&8Relatively easy, have fun :)"
         if event-slot is 12:
             cancel event
-            if player has 60 diamonds:
-                if name of event-item does not contain "Exceedingly":
-                    remove 60 diamonds from player
-                    give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
+            if player has 60 diamonds named "Diamond":
+                remove 60 diamonds named "Diamond" from player
+                give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
         if event-slot is 14:
             cancel event
-            if player has 20 diamond blocks:
-                if name of event-item does not contain "Exceedingly":
-                    remove 20 diamond blocks from player
-                    give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
+            if player has 20 diamond blocks named "Block Of Diamond":
+                remove 20 diamond blocks named "Block Of Diamond" from player
+                give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
         if event-slot is 16:
             cancel event
-            if player has 60 diamond blocks:
-                if name of event-item does not contain "Exceedingly":
-                    remove 60 diamond blocks from player
-                    give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
+            if player has 60 diamond blocks named "Block Of Diamond":
+                remove 60 diamond blocks named "Block Of Diamond" from player
+                give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
 
 command /pontstools:
     aliases: pt 
