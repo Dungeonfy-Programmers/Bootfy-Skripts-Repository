@@ -16,6 +16,11 @@
       "description": "Narcissim in a Dungeonfy map",
       "map_url": "https://github.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/raw/refs/heads/main/mappacks/Chickenmapfy/ul_void.zip",
       "skript_url": ""
+    },
+    "Empty": {
+      "description": "Empty world folder",
+      "map_url": "https://github.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/raw/refs/heads/main/mappacks/Empty/ul_void.zip",
+      "skript_url": ""
     }
   }
 }
