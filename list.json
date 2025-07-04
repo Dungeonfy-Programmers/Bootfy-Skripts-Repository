@@ -11,6 +11,10 @@
     "description": "Helpful Dungeonfy Tools",
     "url": "https://raw.githubusercontent.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/refs/heads/main/skripts/Ponts%20Tools/skript.sk"
   },
+  "Careless Pants Fix": {
+    "description": "Fixed some careless pants stuff & made the little 2x damage title prettier.",
+    "url": "https://raw.githubusercontent.com/Dungeonfy-Programmers/Bootfy-Skripts-Repository/refs/heads/main/skripts/Careless%20Pants%20Fix/skript.sk"
+  },
   "mappacks": {
     "Chickenmapfy": {
       "description": "Narcissim in a Dungeonfy map",

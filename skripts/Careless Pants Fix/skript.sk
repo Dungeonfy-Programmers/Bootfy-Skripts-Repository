@@ -1,0 +1,61 @@
+#Fix Cooldown
+on login:
+	if metadata tag "hpantst5" of player = true:
+		set metadata tag "hpantst5" of player to false
+	set metadata tag "clcd" of player to false
+
+#Healthy Pants
+every 1 second:
+	loop all players:
+		if name of loop-player's leggings contains "&cHealthy Pants":
+			delete {firstaid::%loop-player%}
+			if loop-player's health <= loop-player's max health * 0.75:
+				add 10 to loop-player's health
+# Fixed some careless pants stuff & made the little 2x damage title prettier.
+on damage:
+	player is victim
+	loop all players within radius 8 of victim:
+		if name of loop-player's leggings contains "&cHealthy Pants &6&n✫✫✫&d&l✫&5&l✫":
+			heal victim by loop-player's health * 0.1
+
+on damage:			
+	if name of attacker's leggings contains "&cHealthy Pants &6&n✫✫✫&d&l✫":
+		wait 6 ticks
+		add 5 + (damage * 0.02) to attacker's health
+on sneak toggle:
+	if name of player's leggings contains "&cHealthy Pants &6&n✫✫✫&d&l✫&5&l✫":
+		if metadata tag "hpantst5" of player isn't set:
+			set metadata tag "hpantst5" of player to false
+		if metadata tag "hpantst5" of player = false:
+			set metadata tag "hpantst5" of player to true
+			add player's max health * 0.5 to player's health
+			message "&dYou used your Healthy Pants ability!"
+			add player's max health * 0.5 to all players in radius 5 of the player's health
+			wait 10 seconds
+			message "&dYour Healthy Pants ability is ready!"
+			set metadata tag "hpantst5" of player to false
+		else:
+
+#Careless Pants
+on damage:
+	if name of attacker's leggings contains "&3Careless Pants":
+		chance of 20%:
+			send title " " with subtitle "&3[⚔] 2x" to attacker
+			increase damage by damage
+	if name of attacker's leggings contains "&3Careless Pants &6&n✫✫✫&d&l✫":
+		apply weakness 10 to victim for 5 seconds
+on damage:
+	if name of victim's leggings is "&3Careless Pants &6&n✫✫✫&d&l✫&5&l✫":
+		add damage * 0.5 to damage
+on damage:
+	if name of attacker's leggings contains "&3Careless Pants &6&n✫✫✫&d&l✫&5&l✫":
+		if metadata tag "clcd" of attacker isn't set:
+			set metadata tag "clcd" of attacker to false
+		if metadata tag "clcd" of attacker = false:
+			set metadata tag "clcd" of attacker to true
+			projectile does not exist:
+				set damage to damage + (attacker's health * 4)
+			projectile exists:
+				set damage to damage + (attacker's health * 1)
+			wait 10 ticks
+			set metadata tag "clcd" of attacker to false
