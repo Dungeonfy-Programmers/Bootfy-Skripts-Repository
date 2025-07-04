@@ -9,6 +9,8 @@ Create an issue with the file attached. Include a description and a title. It wi
 
 ## Spec
 
-1. Fetch `skripts/*`
-2. Make list by name
-3. Read the first line of the file (`skript.sk`) to get the description
+1. Fetch `list.json`
+2. Make list by name & description
+3. Fetch `key['url']` to download skript
+
+I don't even know what's going on with map packs, just feel it out.
