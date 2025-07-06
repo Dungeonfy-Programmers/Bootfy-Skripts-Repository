@@ -1,4 +1,5 @@
 #Example Skript for Testing Purposes
 
 command /testing:
-  broadcast "hi"
+  trigger:
+    broadcast "hi"
