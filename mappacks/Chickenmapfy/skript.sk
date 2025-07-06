@@ -1,0 +1,2 @@
+command /chickenman:
+  send "Chickenman is very cool" to player
