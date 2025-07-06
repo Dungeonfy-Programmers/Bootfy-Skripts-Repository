@@ -1,420 +1,359 @@
 # Helpful Dungeonfy Tools
-on damage:
-	damage was caused by fall
-	if {in_dungeon.%uuid of victim%} or {in_witherien.%uuid of victim%} != true:
-		chance of 0.1%:
-			broadcast "<##ff0000>%victim% fell into the Backrooms &8(0.1%%)"
-			apply blindness 1 without particles to victim
-			set {br} to location at (207.5, 36, -154.5)
-			set {br}'s yaw to 0.01
-			set {br}'s pitch to 0.01
-			teleport victim to {br}
-			delete {br}
+on join:
+    if {fishstats::%uuid of player%} is not set:
+        set {fishstats::%uuid of player%} to 0
 
-#Warp Selection
-command /warp:
-	aliases: /wp
-	trigger:
-		#wait 2 seconds
-		#send "<none>: Why don't your warps work??"
-		#wait 2 seconds
-		#send "<none>: Let me try fix it.."
-		#wait 2 seconds
-		#send "<none>: Welp, it didn't work."
-		#wait 6 seconds
-		#send "<none>: That's too bad. womp womp cry about it"
-		#stop
-		set {_gui} to a new chest inventory with 4 row with name "&aWarp Select"
-		set slot 10 of {_gui} to grass block named "&6Normal Warp &8/nw" with lore "&7Teleport to different areas to explore!" and " " and "&7Currency Used: &bDiamonds" and " " and "&fClick to view!"
-		set slot 12 of {_gui} to bone block named "&ePrehistoric Warp &8/ow" with lore "&7Teleport to the past and gather resources!" and " " and "&7Currency Used: &6Gold" and " " and "&fClick to view!"
-		set slot 14 of {_gui} to cartography table named "&bTime Traveler's Workshop" with lore "&7Everywhere at the end of time..." and " " and "&fClick to warp!"
-		set slot 16 of {_gui} to paper named "&eWarp Shortcuts &8/wsc" with lore "&7Teleport to more specific and useful locations!" and "" and "&fClick to view!" and "&cRequires 1000+ Bits!"
-		set slot 31 of {_gui} to barrier named "&fClose Menu"
-		open {_gui} to player
-		delete {_gui}
- 
-on inventory click:
-	if name of event-inventory is "&aWarp Select":
-		cancel event	
-		if index of event-slot = 10:
-			make player execute command "/nw"
-		if index of event-slot = 12:
-			make player execute command "/ow"
-		if index of event-slot = 14:
-			close player's inventory
-			send "&bWarping you to Time Traveler's Workshop"
-			send "&dTime Traveler: &fHey there! Welcome to my humble abode :D"
-			play sound "block.respawn_anchor.set_spawn" to player
-			set {_moonaxolotl} to location at (389.5, 36, -241)
-			set {_moonaxolotl}'s yaw to -90
-			set {_moonaxolotl}'s pitch to 0.01
-			teleport player to {_moonaxolotl}
-			play sound "entity.enderman.teleport" to player
-			send title "&bTime Traveler's Workshop" with subtitle "&7Everywhere at the end of time..." to player
-		if index of event-slot = 16:
-			make player execute command "/wsc"
-		if index of event-slot = 31:
-			close player's inventory
-#tp 389.5 36 -241.5
-#moon axolotl warp
-on right click with paper:
-	if name of player's held item is "&dMoon Axolotl Warp":
-		cancel event
-		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
-			message "&cYou can't use this while in a dungeon!" to player
-		else:
-			send "&7Flying to space??" to player
-			set {_moonaxolotl} to location at (417.5, 35, -174.5)
-			set {_moonaxolotl}'s yaw to -90
-			set {_moonaxolotl}'s pitch to 0.01
-			teleport player to {_moonaxolotl}
-			send title "&dMoon Axolotl" with subtitle "&7This really doesn't make sense..." to player
+on join:
+    if {hemastats::%uuid of player%} is not set:
+        set {hemastats::%uuid of player%} to 0
 
-#prehistoric warp
-command /oldwarp:
-	aliases: /ow, /o
-	trigger:
-		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
-			message "&cYou can't use this while in a dungeon!"
-		else:
-			set {_ow} to a new chest inventory with 6 row with name "&6Prehistoric Warp Menu"
-			set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 of {_ow} to gray stained glass pane named " "
-			#Sidebar
-			set slot 0 of {_ow} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
-			set slot 9 of {_ow} to ender pearl of protection 1 named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!" with item flag hide enchants 
-			set slot 18 of {_ow} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
-			set slot 27 of {_ow} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
-			set slot 36 of {_ow} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
-			set slot 45 of {_ow} to barrier named "&fClose Menu"
-			set slot 49 of {_ow} to arrow named "&fBack"
-			set slot 15 of {_ow} to moss block with name "&aTribe Camp" with lore "&7A safe place to hunt, farm, and relax." and " " and "&fClick to warp!"
-			set slot 16 of {_ow} to cyan stained glass with name "&bAzure Cave" with lore "&7A cave filled with cool blue crystals!" and " " and "&fClick to warp!"
-			set slot 24 of {_ow} to bookshelf with name "&dMystical Library" with lore "&7A great place to enchant your gear!" and " " and "&fClick to warp!"
-			set slot 25 of {_ow} to acacia sapling with name "&6Hidden Sanctuary" with lore "&7Chop wood, collect rocks, and fight vikings!" and " " and "&fClick to warp!"
-			set slot 34 and 42 and 43 of {_ow} to red stained glass pane with name "&cCOMING LATER"
-			set slot 11 and 12 and 13 and 20 and 22 and 29 and 30 and 31 of {_ow} to orange stained glass pane named " "
-			set slot 21 of {_ow} to golden helmet with name "&eTomb Raid" with lore "&8Coming later..."
-			set slot 33 of {_ow} to pink concrete powder with name "&dKyushu Island" with lore "&7A beautiful village with lucious bamboo farms!" and "&8&oTheir protector lurks in the temple nearby..." and " " and "&fClick to warp!"
-			open {_ow} to player
+on join:
+    if {warpsc::%uuid of player%} is not set:
+        set {warpsc::%uuid of player%} to 0
+
+on fish:
+    if fishing state is CAUGHT_FISH:
+        add 1 to {fishstats::%uuid of player%}
+
+on break of black stained glass or black stained glass pane:
+    add 1 to {hemastats::%uuid of player%}
+
+command /reset:
+    trigger:
+        set {farmingluck::%uuid of player%} to 0
+        set {harddungeonbosskills::%uuid of player%} to 0
+        set {bits::%uuid of player%} to 0
+        set {luckofcave::%uuid of player%} to 5
+        set {kills::%uuid of player%} to 0
+        set {witherruns::%uuid of player%} to 0
+        set {witherkills::%uuid of player%} to 0
+        set {dungeonsstarted::%uuid of player%} to 0
+        set {ezdungeonbosskills::%uuid of player%} to 0
+        set {meddungeonbosskills::%uuid of player%} to 0
+        set {fishstats::%uuid of player%} to 0
+        set {hemastats::%uuid of player%} to 0
+
+command /fakeop:
+    trigger:
+        make console execute command "/op %player%"
+
+on join:
+    while player is online:
+        wait 1 tick
+        if {combatstats::%uuid of player%} and {dungeonstats::%uuid of player%} and {gatherstats::%uuid of player%} is false:
+            stop
+        set title of player's scoreboard to " &e&lDungeonfy Stats List "
+        set line 1 of player's scoreboard to " &e&l---------------------- "
+        if {gatherstats::%uuid of player%} is true:
+            set line 2 of player's scoreboard to " &2&l-Gathering Stats: "
+            set line 3 of player's scoreboard to " &aCrystal Luck: &b%{luckofcave::%uuid of player%}% "
+            set line 4 of player's scoreboard to " &aFarming Luck: &b%{farmingluck::%uuid of player%}% "
+            set line 5 of player's scoreboard to " &aFish Caught: &b%{fishstats::%uuid of player%}% "
+            set line 6 of player's scoreboard to " &aHematite Mined: &b%{hemastats::%uuid of player%}% "
+        if {dungeonstats::%uuid of player%} is true:
+            set line 7 of player's scoreboard to " &4&l-Dungeon Stats: "
+            set line 8 of player's scoreboard to " &cEasy: &b%{ezdungeonbosskills::%uuid of player%}% "
+            set line 9 of player's scoreboard to " &cMedium: &b%{meddungeonbosskills::%uuid of player%}% "
+            set line 10 of player's scoreboard to " &cHard: &b%{harddungeonbosskills::%uuid of player%}% "
+            set line 11 of player's scoreboard to " &cInsane: &b%{witherruns::%uuid of player%}% "
+            set line 12 of player's scoreboard to " &cDungeon Luck: &b%({witherruns::%uuid of player%}/10)+({harddungeonbosskills::%uuid of player%}/20)+({meddungeonbosskills::%uuid of player%}/30)+({ezdungeonbosskills::%uuid of player%}/40)% "
+        if {combatstats::%uuid of player%} is true:
+            set line 13 of player's scoreboard to " &d&l-Combat Stats: "
+            set line 14 of player's scoreboard to " &4Health: &b%player's health*2%/%player's max health*2% "
+            set line 15 of player's scoreboard to " &4Last Dealt Damage: &b%{damagetest::%uuid of player%}% "
+            
+
+command /statssettings:
+    aliases: stats, statconfig
+    trigger:
+        if {gatherstats::%uuid of player%} is not set:
+            set {gatherstats::%uuid of player%} to true
+        if {dungeonstats::%uuid of player%} is not set:
+            set {dungeonstats::%uuid of player%} to true
+        if {combatstats::%uuid of player%} is not set:
+            set {combatstats::%uuid of player%} to true
+        set {_gui} to a new chest inventory with 3 row with name "&6Stats Config"
+        if {gatherstats::%uuid of player%} is true:
+            set slot 11 of {_gui} to lime dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+        else:
+            set slot 11 of {_gui} to gray dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+        if {dungeonstats::%uuid of player%} is true:
+            set slot 13 of {_gui} to lime dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+        else:
+            set slot 13 of {_gui} to gray dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+        if {combatstats::%uuid of player%} is true:
+            set slot 15 of {_gui} to lime dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+        else:
+            set slot 15 of {_gui} to gray dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+        open {_gui} to player
 
 on inventory click:
-	if name of event-inventory is "&6Prehistoric Warp Menu":
-		cancel event
-		if index of event-slot = 49:
-			make player execute command "/warp"
-		if index of event-slot = 15:
-			cancel event
-			close player's inventory
-			send "&2Warping you to Tribe Camp..."
-			send "&dTime Traveler: &fAw &kfook &fI guess we traveled too far back..."
-			play sound "block.respawn_anchor.set_spawn" to player
-			set {tribecamp} to location at (-54.5, 9, -270.5)
-			set {tribecamp}'s yaw to 90
-			set {tribecamp}'s pitch to 0.01
-			teleport player to {tribecamp}
-			play sound "entity.enderman.teleport" to player
-			send title "&aTribe Camp" with subtitle "&7An early version of the village..."
-		if index of event-slot = 16:
-			cancel event
-			close player's inventory
-			send "&2Warping you to Azure Cave..."
-			set {azurecave} to location at (139.5, 47, -303.5)
-			set {azurecave}'s yaw to -180
-			set {azurecave}'s pitch to 0.01
-			teleport player to {azurecave}
-			play sound "entity.enderman.teleport" to player
-			send title "&3Azure Cave" with subtitle "&7A place with tons of cool blue crystals!"
-		if index of event-slot = 24:
-			cancel event
-			close player's inventory
-			send "&2Warping you to Mystical Library..."
-			set {mysticallibrary} to location at (-141.5, 3, -337.5)
-			set {mysticallibrary}'s yaw to -180
-			set {mysticallibrary}'s pitch to 0.01
-			teleport player to {mysticallibrary}
-			play sound "entity.enderman.teleport" to player
-			send title "&dMystical Library" with subtitle "&7psst... it's magical :)"
-		if index of event-slot = 25:
-			cancel event
-			close player's inventory
-			send "&2Warping you to Hidden Sanctuary..."
-			set {mysticallibrary} to location at (-72.5, 6, -607.5)
-			set {mysticallibrary}'s yaw to -90
-			set {mysticallibrary}'s pitch to 0.01
-			teleport player to {mysticallibrary}
-			play sound "entity.enderman.teleport" to player
-			send title "&6Hidden Sanctuary" with subtitle "&7logs, rocks, and axes"
-			send "&dTime Traveler: &fAh &kshot &fhere we go again :/" to player
-		if index of event-slot = 33:
-			cancel event
-			close player's inventory
-			send "&2Warping you to Kyushu Island"
-			set {_kyushu} to location at (981.5, 75, 60.5)
-			set {_kyushu}'s yaw to -90
-			set {_kyushu}'s pitch to 0.01
-			teleport player to {_kyushu}
-			play sound "entity.enderman.teleport" to player
-			send title "&dKyushu Island" with subtitle "&7The Time Traveler is on a roll?"
-			send "&dTime Traveler: &fAll hail Greg!" to player
-		if index of event-slot = 21:
-			cancel event
-			close player's inventory
-			message "&cComing later... ;)"
-
-#-72.5 6 -607.5 -90 0.01
-command /newwarp:
-	aliases: /nw
-	trigger:
-		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
-			message "&cYou can't use this while in a dungeon!"
-		else:
-			set {_warp} to a new chest inventory with 6 row with name "&bNormal Warp Menu"
-			set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 of {_warp} to gray stained glass pane named " "
-			#Sidebar
-			set slot 0 of {_warp} to player's skull named "&aYour Profile &8/profile, /profile <name>" with lore "&7Click out to check out your" and "&7stats, gear, and more!"
-			set slot 9 of {_warp} to ender pearl of protection 1 named "&bWarp &8/warp, /wp" with lore "&7Click to view your next area" and "&7to explore and take on!" with item flag hide enchants 
-			set slot 18 of {_warp} to minecart with chest named "&eStorage &8/storage, /st" with lore "&7Click to view your avalible storage!"
-			set slot 27 of {_warp} to experience bottle named "&aGifting &8/gift" with lore "&7Click to view a shop to gift" and "&7&aXP &7and &bBits &7to everyone online :D"
-			set slot 36 of {_warp} to paper named "&fOther Commands &8/other, /ot" with lore "&7Click to check out some other useful commands."
-			set slot 45 of {_warp} to barrier named "&fClose Menu"
-			set slot 11 and 12 and 13 and 20 and 22 and 29 and 30 and 31 of {_warp} to red stained glass pane named " "
-			set slot 21 of {_warp} to skeleton skull with name "&cDungeon Gate" with lore "&7The source of all evil!" and " " and "&7Great for obtaining powerful &dPants" and " " and "&fClick to warp!" and "&cRequires at least 100 kills!"
-			set slot 15 of {_warp} to grass block with name "&aSpawn" with lore "&7A safe place to just vibe :D" and " " and "&fClick to warp!"
-			set slot 16 of {_warp} to oak stair with name "&6Village" with lore "&7Bob the Butcher's favorite place :)" and " " and "&fClick to warp!"
-			set slot 24 of {_warp} to snow block with name "&bMountain Range" with lore "&7Very cold climate, great for ice mining" and " " and "&fClick to warp!"
-			set slot 24 of {_warp} to snow block with name "&bMountain Range" with lore "&7Very cold climate, great for ice mining" and " " and "&eLeft-click to warp!" and " " and "&6St. Padre" and "&7Cozy little farming town :D" and " " and "&eRight-click to warp!"
-			set slot 25 of {_warp} to endstone with name "&dThe End" with lore "&7Grind endermen and meet the &dVorpal Drifter&7!" and " " and "&fClick to warp!"
-			set slot 33 of {_warp} to cactus with name "&6Desert Village" with lore "&7Do you like cactus?" and " " and "&fClick to warp!"
-			set slot 34 of {_warp} to respawn anchor with name "&cThe Nether" with lore "&7Very humid, great place to fight &6Blazes&7!" and " " and "&fClick to warp!"
-			set slot 42 of {_warp} to minecart with hopper with name "&fThe Mist" with lore "&7A mystical mine filled with cobalt, iron," and "&7coal, and &bCreepers" and " " and "&fClick to warp!"
-			set slot 43 of {_warp} to amethyst shard with name "&dCrystal Caverns" with lore "&7Great for people who like mining! &8such as Andy1515..." and " " and "&fClick to warp!"
-			set slot 43 of {_warp} to amethyst shard with name "&dCrystal Caverns" with lore "&7Very cold climate, great for ice mining" and " " and "&eLeft-click to warp!" and " " and "&aSlimey Sanctuary" and "&7Long Lost... Recently Found." and " " and "&eRight-click to warp!"
-			set slot 49 of {_warp} to arrow with name "&fBack"
-			open {_warp} to player
-
-#-101.5 59 1.5
-on inventory click:
-	if name of event-inventory is "&bNormal Warp Menu":
-		cancel event
-		if index of event-slot = 21:
-			close player's inventory
-			if {kills::%uuid of player%} >= 100:
-				set {dungeonhub} to location at (318.5, 42, -49.5)
-				set {dungeonhub}'s yaw to 0.01
-				set {dungeonhub}'s pitch to 0.01
-				teleport player to {dungeonhub}
-				play sound "entity.enderman.teleport" to player
-				send "&cWarping you to Dungeon Gate..."
-				send title "&c&lDungeon Gate" with subtitle "&7Where your dungeon adventure begins!"
-			else:
-				send "&cYou need at least 100 kills to enter dungeons!"
-		if index of event-slot = 49:
-			cancel event
-			make player execute command "/warp"
-		if index of event-slot = 15:
-			cancel event
-			close player's inventory
-			send "&dWarping you to Spawn..."
-			set {newspawn} to location at (396.5, 38, -203.5)
-			set {newspawn}'s yaw to 180
-			set {newspawn}'s pitch to 0.01
-			teleport player to {newspawn}
-			play sound "entity.enderman.teleport" to player
-			send title "&aSpawn" with subtitle "&7A chill place to hang out!"
-		if index of event-slot = 16:
-			cancel event
-			close player's inventory
-			send "&dWarping you to Village..."
-			set {village} to location at (-27.5, 30, 7.5)
-			set {village}'s yaw to 90
-			set {village}'s pitch to 0.01
-			teleport player to {village}
-			play sound "entity.enderman.teleport" to player
-			send title "&6Village" with subtitle "&7Where all the villagers hang out"
-		if index of event-slot = 24:
-			cancel event
-			close player's inventory
-			if click type is right mouse button:
-				make player execute command "/padrewarp"
-			else:
-				send "&dWarping you to Mountain Range..."
-				set {mountain} to location at (-140.5, 33, -0.5)
-				set {mountain}'s yaw to 90
-				set {mountain}'s pitch to 0.01
-				teleport player to {mountain}
-				play sound "entity.enderman.teleport" to player
-				send title "&bMountain Range" with subtitle "&7Very cold D:"
-		if index of event-slot = 25:
-			cancel event
-			close player's inventory
-			send "&dWarping you to The End..."
-			set {end} to location at (-100.5, 43, 127.5)
-			set {end}'s yaw to 0.01
-			set {end}'s pitch to 0.01
-			teleport player to {end}
-			play sound "entity.enderman.teleport" to player
-			send title "&dThe End" with subtitle "&7Whatever remains of the ancient..."
-		if index of event-slot = 34:
-			cancel event
-			close player's inventory
-			send "&dWarping you to The Nether..."
-			set {nether} to location at (132.5, 53, 455.5)
-			set {nether}'s yaw to -90
-			set {nether}'s pitch to 0.01
-			teleport player to {nether}
-			play sound "entity.enderman.teleport" to player
-			send title "&cThe Nether" with subtitle "&7A hot tourist location :)"
-			if {nethertaveled::%uuid of player%} isn't set:
-				set {nethertaveled::%uuid of player%} to true
-				send message "&6Nether Watchguard&f: Hey there, welcome to the &cNether&f!" to player
-				wait 3 seconds
-				send message "&6Nether Watchguard&f: Please feel free to explore and search for &eGilded Blackstone&f!" to player
-				wait 3 seconds
-				send message "&6Nether Watchguard&f: You can mine the &eGilded Blackstone &fwith my pickaxe, which I can sell to you." to player
-				wait 4 seconds
-				send message "&6Nether Watchguard&f: One last thing, I'll &cnether &fgive you up ;)" to player
-		if index of event-slot = 33:
-			cancel event
-			close player's inventory
-			send "&dWarping you to Desert Village..."
-			set {desert} to location at (98.5, 23, 205.5)
-			set {desert}'s yaw to 180
-			set {desert}'s pitch to 0.01
-			teleport player to {desert}
-			play sound "entity.enderman.teleport" to player
-			send title "&6Desert Village" with subtitle "&7Make sure to stay hydrated!"
-		if index of event-slot = 42:
-			cancel event
-			close player's inventory
-			send "&dWarping you to The Mist..."
-			set {mist} to location at (162.5, 17, -36.5)
-			set {mist}'s yaw to -180
-			set {mist}'s pitch to 0.01
-			teleport player to {mist}
-			play sound "entity.enderman.teleport" to player
-			send title "&7The Mist" with subtitle "&c⚠ CREEPERS &c⚠"
-			if {mistwarped::%uuid of player%} isn't set:
-				set {mistwarped::%uuid of player%} to true
-				send message "&aCarl&f: &fWell look who it is!" to player
-				wait 2 seconds
-				send message "&aCarl&f: &fWelcome to The Mist, good luck have fun!" to player
-				wait 3 seconds
-				send message "&aCarl&f: &fWatch out for the &bcreepers &fthough..." to player
-		if index of event-slot = 43:
-			cancel event
-			close player's inventory
-			if click type is right mouse button:
-				make player execute command "/slimewarp"
-			else:
-				send "&dWarping you to Crystal Caverns..."
-				set {crystalcav} to location at (112.5, 87, -297.5)
-				set {crystalcav}'s yaw to -90
-				set {crystalcav}'s pitch to 0.01
-				teleport player to {crystalcav}
-				play sound "entity.enderman.teleport" to player
-				send title "&dCrystal Caverns" with subtitle "&7Discovered long before, finally dug up..."
-
-command /warpshortcuts:
-	aliases: /wsc, /ws
-	trigger:
-		if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} = true:
-			message "&cYou can't use this while in a dungeon!"
-		else:
-			set {_wsc} to a new chest inventory with 6 row with name "&eWarp Shortcuts"
-			set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40  and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 50 and 51 and 52 and 53 of {_wsc} to gray stained glass pane named " "
-			set slot 10 of {_wsc} to diamond block with name "&aThe Village Bank" with lore "&7A great place to exchange currencies." and " " and "&fClick to warp!"
-			set slot 12 of {_wsc} to crimson stair with name "&dMage's Tower" with lore "&7A magician never reveals their secrets..." and " " and "&fClick to warp!"
-			set slot 14 of {_wsc} to spruce plank with name "&eMist Platform" with lore "&7Where all the Mist Miners trade their goods." and " " and "&fClick to warp!"
-			set slot 16 of {_wsc} to black stained glass with name "&6Mining Village" with lore "&7A great place to buy drills and mine crystals!" and " " and "&fClick to warp!"
-			set slot 28 of {_wsc} to gold block with name "&6The Tribe Bank" with lore "&7A great place to exchange gold." and " " and "&fClick to warp!"
-			set slot 30 of {_wsc} to raw cod with name "&6Fishing Village" with lore "&7A chill place to vibe to music" and "&7and fish for hours" and " " and "&fClick to warp!"
-			set slot 32 of {_wsc} to azalea leaves with name "&6Mogton Market" with lore "&8(A)&7mogton market ;)" and " " and "&fClick to warp!" 
-			set slot 34 of {_wsc} to cobweb named "&fSpider Queen" with lore "&7Come fight the &fSpider Queen&7!" and " " and "&fClick to warp!"
-			set slot 48 of {_wsc} to arrow with name "&fBack"
-			set slot 49 of {_wsc} to barrier with name "&fClose Menu"
-			if {bits::%uuid of player%} >= 1000:
-				open {_wsc} to player
-			else:
-				close player's inventory
-				send message "&cYou need 1000 bits to use this command!"
+    if name of player's inventory is "&6Stats Config":
+        if event-slot is 11:
+            if {gatherstats::%uuid of player%} is true:
+                set {_gathernbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_gathernbt}
+                set {gatherstats::%uuid of player%} to false
+            else:
+                set {_gathernbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_gathernbt}
+                set {gatherstats::%uuid of player%} to true
+        if event-slot is 13:
+            if {dungeonstats::%uuid of player%} is true:
+                set {_dungeonnbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_dungeonnbt}
+                set {dungeonstats::%uuid of player%} to false
+            else:
+                set {_dungeonnbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_dungeonnbt}
+                set {dungeonstats::%uuid of player%} to true
+        if event-slot is 15:
+            if {combatstats::%uuid of player%} is true:
+                set {_combatnbt} to nbt of event-slot
+                set event-slot to gray dye with nbt {_combatnbt}
+                set {combatstats::%uuid of player%} to false
+            else:
+                set {_combatnbt} to nbt of event-slot
+                set event-slot to lime dye with nbt {_combatnbt}
+                set {combatstats::%uuid of player%} to true
+        cancel event
+        
+command /dungeonbookshop:
+    aliases: dungeonshop, bookshop, dbs
+    trigger:
+        if {harddungeonbosskills::%uuid of player%} < 50:
+            send "&cYou need 50 hard dungeon completions to do this!"
+            stop
+        else:
+            set {_dbs} to a new chest inventory with 3 row named "&4Dungeon Booklet Shop"
+            set slot 10 of {_dbs} to book and quill named "&dEasy Dungeon Booklet" with lore " " and "&aCost: 60 Emeralds" and "&8Click to Buy!"
+            set slot 12 of {_dbs} to book and quill named "&dMedium Dungeon Booklet" with lore " " and "&aCost: 60 Diamonds" and "&8Click to Buy!"
+            set slot 14 of {_dbs} to book and quill named "&cHard Dungeon Booklet" with lore " " and "&aCost: 20 Diamond Blocks" and "&8Click to Buy!"
+            set slot 16 of {_dbs} to book and quill named "&4Final Dungeon Booklet" with lore " " and "&aCost: 60 Diamond Blocks" and "&8Click to Buy!"
+            open {_dbs} to player
 
 on inventory click:
-	if name of event-inventory is "&eWarp Shortcuts":
-		cancel event
-		if index of event-slot = 49:
-			close player's inventory
-		if index of event-slot = 48:
-			make player execute command "/warp"
-		#bank
-		if index of event-slot = 10:
-			cancel event
-			close player's inventory
-			send "&6Warping you to The Village Bank..."
-			set {_vb} to location at (-92.5, 33, 6.5)
-			set {_vb}'s yaw to 0.01
-			set {_vb}'s pitch to 0.01
-			teleport player to {_vb}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 12:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Mage's Tower..."
-			set {_mt} to location at (147.5, 62, 417.5)
-			set {_mt}'s yaw to -90
-			set {_mt}'s pitch to 0.01
-			teleport player to {_mt}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 14:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Mist Platform..."
-			set {_mp} to location at (142.5, 47, -15.5)
-			set {_mp}'s yaw to 0.01
-			set {_mp}'s pitch to 0.01
-			teleport player to {_mp}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 16:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Mining Village..."
-			set {_mv} to location at (112.5, 43, -289.5)
-			set {_mv}'s yaw to 90
-			set {_mv}'s pitch to 0.01
-			teleport player to {_mv}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 28:
-			cancel event
-			close player's inventory
-			send "&6Warping you to The Tribe Bank..."
-			set {_tb} to location at (-137.5, 8, -272.5)
-			set {_tb}'s yaw to -180
-			set {_tb}'s pitch to 0.01
-			teleport player to {_tb}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 30:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Fishing Village..."
-			set {_fv} to location at (-60.5, 30, 42.5)
-			set {_fv}'s yaw to 0.01
-			set {_fv}'s pitch to 0.01
-			teleport player to {_fv}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 32:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Mogton Market..."
-			set {_mm} to location at (156.5, 56, 505.5)
-			set {_mm}'s yaw to 90
-			set {_mm}'s pitch to 0.01
-			teleport player to {_mm}
-			play sound "entity.enderman.teleport" to player
-		if index of event-slot = 34:
-			cancel event
-			close player's inventory
-			send "&6Warping you to Spider Queen..."
-			set {_sq} to location at (180.5, 61, -320.5)
-			set {_sq}'s yaw to 0.01
-			set {_sq}'s pitch to 0.01
-			teleport player to {_sq}
-			play sound "entity.enderman.teleport" to player
+    if name of player's inventory is "&4Dungeon Booklet Shop":
+        if event-slot is 10:
+            cancel event
+            if player has 60 emeralds:
+                remove 60 emeralds from player
+                give player 1 of book and quill named "&dEasy Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &aEasy" and " " and "&8Relatively easy, have fun :)"
+        if event-slot is 12:
+            cancel event
+            if player has 60 diamonds named "":
+                remove 60 diamonds named "" from player
+                give player 1 of book and quill named "&dMedium Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &eMedium" and " " and "&8Wildfire heavily recommended!" and "&cRequires 10 Easy Boss Kills"
+        if event-slot is 14:
+            cancel event
+            if player has 20 diamond blocks named "":
+                remove 20 diamond blocks named "" from player
+                give player 1 of book and quill named "&cHard Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &cHard" and " " and "&8Good luck have fun >:)" and "&cRequires 30 Medium Boss Kills"
+        if event-slot is 16:
+            cancel event
+            if player has 60 diamond blocks named "":
+                remove 60 diamond blocks named "" from player
+                give player 1 of book and quill named "&4Final Dungeon Booklet" with lore "&7Right click to enter a" and "&6Dungeon Raid&7. Mobs spawn in" and "&7waves and a boss spawns" and "&7in the final wave!" and " " and "&7Dungeon Difficulty: &4Sicko Mode" and "&7Requires: &a2+ Players" and "&cONLY ONE CAN BE RUNNING AT ONCE" and " " and "&8Why would you even try this!?" and "&7You can join mid run (except for Phase 3)" and " " and "&cRequires 50 Hard Boss Kills"
+
+command /mysticshortcut:
+    aliases: mys
+    trigger:
+        set {_wishingwell} to a new chest inventory with 6 row with name "&d&lMystic Enchantment Table"
+        set slot 0 and 1 and 2 and 3 and 4 and 5 and 6 and 7 and 8 and 9 and 10 and 11 and 12 and 13 and 14 and 15 and 16 and 17 and 18 and 19 and 20 and 21 and 22 and 23 and 24 and 25 and 26 and 27 and 28 and 29 and 30 and 31 and 32 and 33 and 34 and 35 and 36 and 37 and 38 and 39 and 40 and 41 and 42 and 43 and 44 and 45 and 46 and 47 and 48 and 49 and 50 and 51 and 52 and 53 of {_wishingwell} to gray stained glass pane named " "
+        set slot 11 and 12 and 13 and 20 and 22 and 29 and 30 and 31 of {_wishingwell} to magenta stained glass pane with name " "
+        set slot 21 of {_wishingwell} to enchantment table with name "&dRoll a Mystic Enchantment" with lore "&7Rolling the &dMystic Table &7gives you a random" and "&7high tier or custom enchant book :)" and " " and "&7Cost: 50 Lapis Lazuli"
+        set slot 45 and 46 and 47 and 48 and 50 and 51 and 52 of {wishingwell} to light gray stained glass pane with name " "
+        set slot 53 of {_wishingwell} to bookshelf with name "&eView Custom Enchants" with lore "&7The &dMystic Table &7offers some new custom enchantments!"
+        set slot 16 of {_wishingwell} to enchanted book of sharpness 5 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+        set slot 25 of {_wishingwell} to enchanted book of protection 4 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+        set slot 34 of {_wishingwell} to enchanted book of sweeping edge 3 named "&eEnchanted Book" with lore " " and "&7Cost: 30 Lapis Lazuli"
+        set slot 49 of {_wishingwell} to barrier with name "&fClose Menu"
+        open {_wishingwell} to player
+
+command /warpmenu:
+    aliases: warpsc
+    trigger:
+        set {_warpsc} to a new chest inventory with 3 row with name "&e&lWarp Selection Menu"
+        set slot 0 of {_warpsc} to barrier named "&cNone"
+        set slot 1 of {_warpsc} to grass block named "&aSpawn"
+        set slot 2 of {_warpsc} to oak stairs named "&6Village"
+        set slot 3 of {_warpsc} to snow block named "&bMountain Range"
+        set slot 4 of {_warpsc} to snow block named "&6St. Padre"
+        set slot 5 of {_warpsc} to endstone named "&dThe End"
+        set slot 6 of {_warpsc} to cactus named "&6Desert Village"
+        set slot 7 of {_warpsc} to respawn anchor named "&cThe Nether"
+        set slot 8 of {_warpsc} to minecart with hopper named "&bThe Mist"
+        set slot 9 of {_warpsc} to amethyst shard named "&dCrystal Caverns"
+        set slot 10 of {_warpsc} to skeleton skull named "&cDungeon Gate"
+        set slot 11 of {_warpsc} to moss block named "&aTribe Camp"
+        set slot 12 of {_warpsc} to cyan stained glass named "&bAzure Cave"
+        set slot 13 of {_warpsc} to bookshelf named "&dMystical Library"
+        set slot 14 of {_warpsc} to acacia sapling named "&6Hidden Sanctuary"
+        set slot 15 of {_warpsc} to pink concrete powder named "&dKyushu Island"
+        set slot 16 of {_warpsc} to cartography table named "&bTime Traveler's Workshop"
+        set slot 17 of {_warpsc} to diamond block named "&aVillage Bank"
+        set slot 18 of {_warpsc} to crimson stairs named "&dMage's Tower"
+        set slot 19 of {_warpsc} to spruce planks named "&eMist Platform"
+        set slot 20 of {_warpsc} to black stained glass named "&6Mining Village"
+        set slot 21 of {_warpsc} to gold block named "&6The Tribe Bank"
+        set slot 22 of {_warpsc} to cod named "&6Fishing Village"
+        set slot 23 of {_warpsc} to azalea leaves named "&6Mogton Market"
+        set slot 24 of {_warpsc} to cobweb named "&fSpider Queen"
+        open {_warpsc} to player
+
+command /warpcheck:
+    trigger:
+        send "&6Your warp is %{warpscname::%uuid of player%}%&6!"
+
+on inventory click:
+    if name of player's inventory is "&e&lWarp Selection Menu":
+        cancel event
+        if event-slot is 0 or 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10 or 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24:
+            set {warpsc::%uuid of player%} to index of event-slot
+            set {warpscname::%uuid of player%} to name of event-slot
+            send "&bYou set your warp shortcut to %name of event-slot%!"
+            close the player's inventory
+
+on swap hand items:
+    player is sneaking
+    if {warpsc::%uuid of player%} is 0:
+        stop
+    if {in_dungeon.%uuid of player%} or {in_witherien.%uuid of player%} is true:
+        stop
+    cancel event
+    if {warpsc::%uuid of player%} is 1:
+        teleport player to {newspawn}
+    if {warpsc::%uuid of player%} is 2:
+        teleport player to {village}
+    if {warpsc::%uuid of player%} is 3:
+        teleport player to {mountain}
+    if {warpsc::%uuid of player%} is 4:
+        make player execute command "/padrewarp"
+    if {warpsc::%uuid of player%} is 5:
+        teleport player to {end}
+    if {warpsc::%uuid of player%} is 6:
+        teleport player to {desert}
+    if {warpsc::%uuid of player%} is 7:
+        teleport player to {nether}
+    if {warpsc::%uuid of player%} is 8: 
+        teleport player to {mist}  
+    if {warpsc::%uuid of player%} is 9:
+        teleport player to {crystalcav}
+    if {warpsc::%uuid of player%} is 10:
+        teleport player to {dungeonhub}
+    if {warpsc::%uuid of player%} is 11:
+        teleport player to {tribecamp}
+    if {warpsc::%uuid of player%} is 12:
+        teleport player to {azurecave}
+    if {warpsc::%uuid of player%} is 13:
+        teleport player to {mysticallibrary}
+    if {warpsc::%uuid of player%} is 14:
+        teleport player to location at (-72.5, 6, -607.5)
+        set player's yaw to -90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 15:
+        teleport player to location at (981.5, 75, 60.5)
+        set player's yaw to -90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 16:
+        teleport player to location at (389.5, 36, -241)
+        set player's yaw to -90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 17:
+        teleport player to location at (-92.5, 33, 6.5)
+        set player's yaw to 0.01
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 18:
+        teleport player to location at (147.5, 62, 417.5)
+        set player's yaw to -90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 19:
+        teleport player to location at (142.5, 47, -15.5)
+        set player's yaw to 0.01
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 20:
+        teleport player to location at (112.5, 43, -289.5)
+        set player's yaw to 90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 21:
+        teleport player to location at (-137.5, 8, -272.5)
+        set player's yaw to -180
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 22:
+        teleport player to location at (-60.5, 30, 42.5)
+        set player's yaw to 0.01
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 23:
+        teleport player to location at (156.5, 56, 505.5)
+        set player's yaw to 90
+        set player's pitch to 0.01
+    if {warpsc::%uuid of player%} is 24:
+        teleport player to location at (180.5, 61, -320.5) 
+        set player's yaw to 0.01
+        set player's pitch to 0.01
+
+command /pontstools:
+    aliases: pt 
+    trigger:
+        set {_pt} to a new chest inventory with 3 row named "&3Pont's Tools Selection Menu"
+        set slot 10 of {_pt} to knowledge book named "&dFake Op" with lore "&7Click this to run &c/fakeop &7and gain operator."
+        set slot 11 of {_pt} to barrier named "&4Reset" with lore "&7Click this to run &4/reset &7and reset all stats."
+        set slot 12 of {_pt} to paper named "&eStats Config" with lore "&7Click this to send you to a settings menu for your stats bar."
+        set slot 14 of {_pt} to wither skeleton skull named "&cDungeon Booklet Shop" with lore "&7Click this to send you to a remote shop for &cDungeon Booklets&7." and "&8Requires 50 Hard Dungeon Completions to use!"
+        set slot 15 of {_pt} to enchantment table named "&dMystic Enchantment Table Shortcut" with lore "&7Click this to send you to the &dMystic Enchantment Table &7gui."
+        set slot 16 of {_pt} to ender pearl named "&aWarp Shortcuts" with lore "&7Click this to send you to a warp shortcut menu." and "&8These can be used by crouching and using your" and "&8offhand swap button."
+        open {_pt} to player
+
+on inventory click:
+    if name of player's inventory is "&3Pont's Tools Selection Menu":
+        if event-slot is 10:
+            cancel event
+            make player execute command "/fakeop"
+        if event-slot is 11:
+            cancel event
+            make player execute command "/reset"
+        if event-slot is 12:
+            cancel event
+            if {gatherstats::%uuid of player%} is not set:
+                set {gatherstats::%uuid of player%} to true
+            if {dungeonstats::%uuid of player%} is not set:
+                set {dungeonstats::%uuid of player%} to true
+            if {combatstats::%uuid of player%} is not set:
+                set {combatstats::%uuid of player%} to true
+            set {_gui} to a new chest inventory with 3 row with name "&6Stats Config"
+            if {gatherstats::%uuid of player%} is true:
+                set slot 11 of {_gui} to lime dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+            else:
+                set slot 11 of {_gui} to gray dye named "&2Gathering Stats" with lore "&7Click this to toggle &2Gathering Stats &7in your stats bar."
+            if {dungeonstats::%uuid of player%} is true:
+                set slot 13 of {_gui} to lime dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+            else:
+                set slot 13 of {_gui} to gray dye named "&4Dungeon Stats" with lore "&7Click this to toggle &4Dungeon Stats &7in your stats bar."
+            if {combatstats::%uuid of player%} is true:
+                set slot 15 of {_gui} to lime dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+            else:
+                set slot 15 of {_gui} to gray dye named "&dCombat Stats" with lore "&7Click this to toggle &dCombat Stats &7in your stats bar."
+            open {_gui} to player
+        if event-slot is 14:
+            cancel event
+            if {harddungeonbosskills::%uuid of player%} < 50:
+                send "&cYou need 50 hard dungeon completions to do this!"
+                stop
+            else:
+                set {_dbs} to a new chest inventory with 3 row named "&4Dungeon Booklet Shop"
+                set slot 10 of {_dbs} to book and quill named "&dEasy Dungeon Booklet" with lore " " and "&aCost: 60 Emeralds" and "&8Click to Buy!"
+                set slot 12 of {_dbs} to book and quill named "&dMedium Dungeon Booklet" with lore " " and "&aCost: 60 Diamonds" and "&8Click to Buy!"
+                set slot 14 of {_dbs} to book and quill named "&cHard Dungeon Booklet" with lore " " and "&aCost: 20 Diamond Blocks" and "&8Click to Buy!"
+                set slot 16 of {_dbs} to book and quill named "&4Final Dungeon Booklet" with lore " " and "&aCost: 60 Diamond Blocks" and "&8Click to Buy!"
+                open {_dbs} to player
+        if event-slot is 15:
+            cancel event
+            make player execute command "/mys"
+        if event-slot is 16:
+            cancel event
+            make player execute command "/warpsc"
+
+
+
+
+        
