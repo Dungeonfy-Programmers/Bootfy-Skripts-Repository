@@ -18,6 +18,103 @@ on fish:
 on break of black stained glass or black stained glass pane:
     add 1 to {hemastats::%uuid of player%}
 
+on join:
+    if {filtslot1::%uuid of player%} is not set:
+        set {filtslot1::%uuid of player%} to false
+    if {filtslot2::%uuid of player%} is not set:
+        set {filtslot2::%uuid of player%} to false
+    if {filtslot3::%uuid of player%} is not set:
+        set {filtslot3::%uuid of player%} to false
+
+on inventory click:
+    if name of player's inventory is "&6Filtration Funnel":
+        cancel event
+        if event-slot is 0 or 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 or 10 or 11 or 12 or 13 or 14 or 15 or 16 or 17 or 18 or 19 or 20 or 21 or 22 or 23 or 24 or 25 or 26 or 27 or 28 or 29 or 30 or 31 or 32 or 33 or 34 or 35 or 36:
+            if event-slot is not air or gray stained glass:
+                event-slot is not {filtslot1::%uuid of player%} or {filtslot2::%uuid of player%} or {filtslot3::%uuid of player%}
+                if {filtslot1::%uuid of player%} and {filtslot2::%uuid of player%} is not false:
+                    set {filtslot3::%uuid of player%} to 1 of event-slot
+                if {filtslot1::%uuid of player%} is not false:
+                    if {filtslot2::%uuid of player%} is false:
+                        set {filtslot2::%uuid of player%} to 1 of event-slot
+                if {filtslot1::%uuid of player%} is false:
+                    set {filtslot1::%uuid of player%} to 1 of event-slot
+
+                set {_filt} to a new chest inventory with 3 rows named "&6Filtration Funnel"
+                if {filtslot1::%uuid of player%} is false:
+                    set slot 11 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+                else:
+                    set slot 11 of {_filt} to {filtslot1::%uuid of player%}
+                if {filtslot2::%uuid of player%} is false:
+                    set slot 13 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+                else: 
+                    set slot 13 of {_filt} to {filtslot2::%uuid of player%}
+                if {filtslot3::%uuid of player%} is false:
+                    set slot 15 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+                else:
+                    set slot 15 of {_filt} to {filtslot3::%uuid of player%}
+                open {_filt} to player
+
+on inventory click:
+    if name of player's inventory is "&6Filtration Funnel":
+        if event-slot is not air or gray stained glass:
+            if {filtslot1::%uuid of player%} is not false:
+                if event-slot is {filtslot1::%uuid of player%}:
+                    if event-slot is 11:
+                        set {filtslot1::%uuid of player%} to false
+            if {filtslot2::%uuid of player%} is not false: 
+                if event-slot is {filtslot2::%uuid of player%}:
+                    if event-slot is 13: 
+                        set {filtslot2::%uuid of player%} to false
+            if {filtslot3::%uuid of player%} is not false:
+                if event-slot is {filtslot3::%uuid of player%}:
+                    if event-slot is 15:
+                        set {filtslot3::%uuid of player%} to false
+            set {_filt} to a new chest inventory with 3 rows named "&6Filtration Funnel"
+            if {filtslot1::%uuid of player%} is false:
+                set slot 11 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+            else:
+                set slot 11 of {_filt} to {filtslot1::%uuid of player%}
+            if {filtslot2::%uuid of player%} is false:
+                set slot 13 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+            else: 
+                set slot 13 of {_filt} to {filtslot2::%uuid of player%}
+            if {filtslot3::%uuid of player%} is false:
+                set slot 15 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+            else:
+                set slot 15 of {_filt} to {filtslot3::%uuid of player%}
+            open {_filt} to player
+
+on pickup:
+    if name of slot 6 of player's inventory is "&6Filtration Funnel":
+        if {filtslot1::%uuid of player%} or {filtslot2::%uuid of player%} or {filtslot3::%uuid of player%} is not false:
+            if event-item is not {filtslot1::%uuid of player%} or {filtslot2::%uuid of player%} or {filtslot3::%uuid of player%}:
+                cancel event
+
+command /filtreset:
+    trigger:
+        set {filtslot1::%uuid of player%} to false
+        set {filtslot2::%uuid of player%} to false
+        set {filtslot3::%uuid of player%} to false
+
+on right click: 
+    if name of player's held item is "&6Filtration Funnel":
+        set {_filt} to a new chest inventory with 3 rows named "&6Filtration Funnel"
+        if {filtslot1::%uuid of player%} is false:
+            set slot 11 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+        else:
+            set slot 11 of {_filt} to {filtslot1::%uuid of player%}
+        if {filtslot2::%uuid of player%} is false:
+            set slot 13 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+        else: 
+            set slot 13 of {_filt} to {filtslot2::%uuid of player%}
+        if {filtslot3::%uuid of player%} is false:
+            set slot 15 of {_filt} to gray stained glass named "&7Click an item to funnel it."
+        else:
+            set slot 15 of {_filt} to {filtslot3::%uuid of player%}
+        open {_filt} to player
+
+
 command /reset:
     trigger:
         set {farmingluck::%uuid of player%} to 0
@@ -218,7 +315,7 @@ on swap hand items:
     player is sneaking
     if {warpsc::%uuid of player%} is 0:
         stop
-    if {in_dungeon.%uuid of player%} or {in_witherien.%uuid of player%} is true:
+    if {indungeon::%uuid of player%} or {in_witherien::%uuid of player%} is true:
         stop
     cancel event
     if {warpsc::%uuid of player%} is 1:
